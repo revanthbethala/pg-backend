@@ -34,7 +34,7 @@ public class RoomService {
         BranchEntity branch = branchRepository.findById(branchId)
                 .orElseThrow(() -> new ResourceNotFoundException("Branch not found"));
 
-        return roomRepository.findByBranchId(branch)
+        return roomRepository.findByBranch_Id(branchId)
                 .stream()
                 .map(roomMapper::toDto)
                 .toList();

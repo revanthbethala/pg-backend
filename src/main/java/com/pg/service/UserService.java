@@ -1,5 +1,7 @@
 package com.pg.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.pg.dto.UserDto;
@@ -20,14 +22,14 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    public UserDto getCurrentUser(String email) {
+    public UserDto getCurrentUser(String userId) {
 
-        UserEntity user = userRepository.findByEmail(email);
-        if(user==null) {
+        Optional<UserEntity> user = userRepository.findById(userId);
+        if(user.isEmpty()) {
             throw  new ResourceNotFoundException("User not found");
 
         }
-        UserDto dto = userMapper.toDto(user);
+        UserDto dto = userMapper.toDto(user.get());
 
         // Don't expose password
         dto.setPassword(null);
@@ -35,13 +37,12 @@ public class UserService {
         return dto;
     }
 
-    public void deleteCurrentUser(String email) {
+    public void deleteCurrentUser(String userId) {
 
-    	 UserEntity user = userRepository.findByEmail(email);
-         if(user==null) {
+    	 Optional<UserEntity> user = userRepository.findById(userId);
+         if(user.isEmpty()) {
              throw  new ResourceNotFoundException("User not found");
 
-         }
-        userRepository.delete(user);
+         }        userRepository.deleteById(userId);
     }
 }
