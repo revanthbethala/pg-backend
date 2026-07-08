@@ -24,7 +24,8 @@ public class BranchService {
 	private UserRepository userRepository;
 	private JwtUtil jwtUtil;
 
-	public BranchService(BranchRepository branchRepository, BranchMapper branchMapper, UserRepository userRepository,JwtUtil jwtUtil) {
+	public BranchService(BranchRepository branchRepository, BranchMapper branchMapper, UserRepository userRepository,
+			JwtUtil jwtUtil) {
 		this.branchRepository = branchRepository;
 		this.branchMapper = branchMapper;
 		this.userRepository = userRepository;
@@ -35,7 +36,7 @@ public class BranchService {
 		UserEntity user = userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-		java.util.List<BranchEntity> branches =  branchRepository.findByUserId(userId);
+		java.util.List<BranchEntity> branches = branchRepository.findByUserId(userId);
 		return branchMapper.toDtoList(branches);
 	}
 
@@ -47,7 +48,7 @@ public class BranchService {
 		return branchMapper.toDto(branch.get());
 	}
 
-	public BranchDto createBranch(BranchDto branchDto,String userId) {
+	public BranchDto createBranch(BranchDto branchDto, String userId) {
 		UserEntity user = userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found"));
 		branchDto.setUserId(userId);

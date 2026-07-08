@@ -16,6 +16,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 @Component
 public class AuthFilter extends OncePerRequestFilter {
 
@@ -26,10 +27,10 @@ public class AuthFilter extends OncePerRequestFilter {
     private UserDetailsService userDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, 
-                                    HttpServletResponse response, 
-                                    FilterChain filterChain) throws ServletException, IOException {
-        
+    protected void doFilterInternal(HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain) throws ServletException, IOException {
+
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String username;
@@ -38,20 +39,21 @@ public class AuthFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+        System.out.println("auth ehader:" + authHeader);
 
-        jwt = authHeader.substring(7);
+        jwt = authHeader.split(" ")[1];
+        System.out.println("jWt token:" + jwt);
         username = jwtUtil.extractUsername(jwt);
 
         // If a username exists and the user isn't authenticated yet
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-            
+
             if (jwtUtil.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, userDetails.getAuthorities()
-                );
+                        userDetails, null, userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                
+
                 // Establish security context
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
