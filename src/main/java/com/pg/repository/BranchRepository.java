@@ -9,10 +9,8 @@ import com.pg.entity.BranchEntity;
 
 @Repository
 public interface BranchRepository extends JpaRepository<BranchEntity, String> {
-	
 	public BranchEntity findByBranchName(String branchName);
+
 	public List<BranchEntity> findByUserId(String userId);
 
-
 }
-

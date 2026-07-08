@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,22 @@ public class BranchController {
 	public ResponseEntity<ApiResponse<BranchDto>> getBranchById(@PathVariable String id) {
 		BranchDto branchDto = branchService.getBranchById(id);
 		return ResponseEntity.ok(SuccessResponseUtil.success("Branch fetched successfully", branchDto));
+	}
+
+	@GetMapping
+	public ResponseEntity<ApiResponse<List<BranchDto>>> getAllBranches(
+			Authentication authentication) {
+		List<BranchDto> branches = branchService.getAllBranches(authentication.getName());
+		return ResponseEntity.ok(SuccessResponseUtil.success("Branches fetched successfully", branches));
+	}
+
+	@PostMapping
+	public ResponseEntity<ApiResponse<BranchDto>> createBranch(
+			Authentication authentication,
+			@Valid @RequestBody BranchDto branchDto) {
+		BranchDto dto = branchService.createBranch(branchDto, authentication.getName());
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(SuccessResponseUtil.success("Branch created successfully", dto));
 	}
 
 	@PutMapping("/{id}")
