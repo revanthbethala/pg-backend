@@ -31,7 +31,7 @@ public class GuestEntity {
     private LocalDate joiningDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "room_id", nullable = false)
+    @JoinColumn(name = "roomId", nullable = false)
     private RoomEntity room;
 
     public GuestEntity() {

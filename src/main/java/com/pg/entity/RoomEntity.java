@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "rooms")
 public class RoomEntity {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
@@ -25,64 +25,74 @@ public class RoomEntity {
 	private int capacity;
 	private double rent;
 	private boolean maintainance = false;
-	
-    @ManyToOne(fetch = FetchType.LAZY)
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "branchId")
-	private BranchEntity branchId;
-    
+	private BranchEntity branch;
+
 	@OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<GuestEntity> guests = new ArrayList<>();
-	
+
 	public List<GuestEntity> getGuests() {
 		return guests;
 	}
+
 	public void setGuests(List<GuestEntity> guests) {
 		this.guests = guests;
 	}
+
 	public String getId() {
 		return id;
 	}
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
 	public int getRoomNumber() {
 		return roomNumber;
 	}
+
 	public void setRoomNumber(int roomNumber) {
 		this.roomNumber = roomNumber;
 	}
+
 	public int getCapacity() {
 		return capacity;
 	}
+
 	public void setCapacity(int capacity) {
 		this.capacity = capacity;
 	}
+
 	public double getRent() {
 		return rent;
 	}
+
 	public void setRent(double rent) {
 		this.rent = rent;
 	}
+
 	public boolean isMaintainance() {
 		return maintainance;
 	}
+
 	public void setMaintainance(boolean maintainance) {
 		this.maintainance = maintainance;
 	}
-	
+
 	public BranchEntity getBranchId() {
-		return branchId;
+		return branch;
 	}
-	public void setBranchId(BranchEntity branchId) {
-		this.branchId = branchId;
+
+	public void setBranchId(BranchEntity branch) {
+		this.branch = branch;
 	}
+
 	@Override
 	public String toString() {
 		return "RoomEntity [id=" + id + ", roomNumber=" + roomNumber + ", capacity=" + capacity + ", rent=" + rent
 				+ ", maintainance=" + maintainance + "]";
 	}
-	
-	
-	
 
 }
