@@ -11,6 +11,6 @@ import com.pg.entity.BranchEntity;
 public interface BranchRepository extends JpaRepository<BranchEntity, String> {
 	public BranchEntity findByBranchName(String branchName);
 
-	public List<BranchEntity> findByUserId(String userId);
+	public List<BranchEntity> findByUser_Id(String userId);
 
 }

@@ -36,7 +36,7 @@ public class BranchService {
 		UserEntity user = userRepository.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
-		java.util.List<BranchEntity> branches = branchRepository.findByUserId(userId);
+		java.util.List<BranchEntity> branches = branchRepository.findByUser_Id(userId);
 		return branchMapper.toDtoList(branches);
 	}
 

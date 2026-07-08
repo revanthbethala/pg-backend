@@ -12,8 +12,10 @@ public interface RoomMapper {
     @Mapping(target = "branchId", ignore = true)
     @Mapping(target = "guests", ignore = true)
     RoomEntity toEntity(RoomDto dto);
+
     @Mapping(source = "branchId.id", target = "branchId")
     RoomDto toDto(RoomEntity entity);
+
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "branchId", ignore = true)
     @Mapping(target = "guests", ignore = true)
