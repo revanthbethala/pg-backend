@@ -30,7 +30,7 @@ public class GuestDto {
 
     @NotNull(message = "Joining date is required")
     @PastOrPresent(message = "Joining date cannot be in the future")
-    @JsonFormat(pattern = "dd-MM-yyyy")
+//    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate joiningDate;
 
     private String roomId;

@@ -17,7 +17,6 @@ public class BranchDto {
 	@NotBlank
 	private String city;
     private Boolean isActive = true;
-    @NotBlank(message = "User Id is required")
     private String userId;
     private java.util.List<RoomDto> rooms;
 	public String getId() {

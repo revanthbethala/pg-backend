@@ -62,12 +62,12 @@ public class AuthService {
 		UserEntity userEntity = userRepository.findByRefreshToken(refreshToken);
 
 		if (userEntity == null ||
-				!jwtUtil.validateRefreshToken(refreshToken, userEntity.getEmail())) {
+				!jwtUtil.validateRefreshToken(refreshToken, userEntity.getId())) {
 			throw new InvalidCredentialException("Invalid refresh token");
 		}
 
-		String newAccessToken = jwtUtil.generateAccessToken(userEntity.getEmail());
-		String newRefreshToken = jwtUtil.generateRefreshToken(userEntity.getEmail());
+		String newAccessToken = jwtUtil.generateAccessToken(userEntity.getId());
+		String newRefreshToken = jwtUtil.generateRefreshToken(userEntity.getId());
 
 		userEntity.setRefreshToken(newRefreshToken);
 		userRepository.save(userEntity);

@@ -14,6 +14,6 @@ public interface RoomRepository extends JpaRepository<RoomEntity, String> {
 	public boolean existsByRoomNumber(int roomNumber);
 
 	public boolean existsByRoomNumberAndIdNot(int roomNumber, String id);
-    List<RoomEntity> findByBranchId(BranchEntity branch);
+    List<RoomEntity> findByBranch_Id(String branchId);
 
 }

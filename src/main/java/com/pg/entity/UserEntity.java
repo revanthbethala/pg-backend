@@ -23,7 +23,7 @@ public class UserEntity {
 	private String password;
 	@Column(length = 1000)
 	private String refreshToken;
-	@OneToMany(mappedBy = "userId", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	private java.util.List<BranchEntity> branches = new ArrayList<>();
 
 	public String getId() {

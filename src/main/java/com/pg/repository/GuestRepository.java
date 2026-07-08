@@ -7,8 +7,9 @@ import org.springframework.stereotype.Repository;
 import com.pg.entity.GuestEntity;
 @Repository
 public interface GuestRepository extends JpaRepository<GuestEntity, String> {
+	
 
-    boolean existsByPhone(String phone);
+	boolean existsByPhone(String phone);
 
     boolean existsByAadhaar(String aadhaar);
 
