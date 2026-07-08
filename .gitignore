@@ -35,5 +35,5 @@ build/
 !.gitignore
 !.gitattributes
 !.mvn/
-
+application.properties
 .settings

@@ -1,22 +1,17 @@
 package com.pg.util;
 
-import java.util.Map;
+import com.pg.dto.ApiResponse;
 
 public final class SuccessResponseUtil {
 
     private SuccessResponseUtil() {
     }
 
-    public static <T> Map<String, Object> success(String message, T data) {
-        return Map.of(
-                "message", message,
-                "data", data
-        );
+    public static <T> ApiResponse<T> success(String message, T data) {
+        return ApiResponse.of(message, data);
     }
 
-    public static Map<String, Object> success(String message) {
-        return Map.of(
-                "message", message
-        );
+    public static ApiResponse<Void> success(String message) {
+        return ApiResponse.of(message);
     }
 }
