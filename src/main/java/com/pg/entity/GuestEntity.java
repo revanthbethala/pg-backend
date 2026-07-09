@@ -15,10 +15,10 @@ public class GuestEntity {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @Column(nullable = false, unique = true, length = 10)
+    @Column(nullable = false, length = 10)
     private String phone;
 
-    @Column(nullable = false, unique = true, length = 12)
+    @Column(nullable = false, length = 12)
     private String aadhaar;
 
     @Column(nullable = true)
@@ -33,9 +33,6 @@ public class GuestEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
     private RoomEntity room;
-
-    public GuestEntity() {
-    }
 
     public String getId() {
         return id;

@@ -21,23 +21,22 @@ public class GuestService {
     private final GuestMapper guestMapper;
 
     public GuestService(GuestRepository guestRepository,
-                        RoomRepository roomRepository,
-                        GuestMapper guestMapper) {
+            RoomRepository roomRepository,
+            GuestMapper guestMapper) {
         this.guestRepository = guestRepository;
         this.roomRepository = roomRepository;
         this.guestMapper = guestMapper;
     }
 
-    public GuestDto createGuest(GuestDto dto,String roomId) {
+    public GuestDto createGuest(GuestDto dto, String roomId) {
 
-    	System.out.println("ROOM ID:"+roomId);
+        System.out.println("ROOM ID:" + roomId);
         RoomEntity room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
 
-        
-        if (guestRepository.existsByAadhaar(dto.getAadhaar())) {
-            throw new DataAlreadyExistsException("Aadhaar already exists");
-        }
+        // if (guestRepository.existsByAadhaar(dto.getAadhaar())) {
+        // throw new DataAlreadyExistsException("Aadhaar already exists");
+        // }
 
         dto.setRoomId(roomId);
 
@@ -66,26 +65,22 @@ public class GuestService {
     }
 
     public GuestDto updateGuest(String id, GuestDto dto) {
+        RoomEntity room = roomRepository.findById(null)
+                .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
 
         GuestEntity guest = guestRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Guest not found"));
 
-        if (!guest.getPhone().equals(dto.getPhone())
-                && guestRepository.existsByPhone(dto.getPhone())) {
-            throw new DataAlreadyExistsException("Phone already exists");
-        }
+        // if (!guest.getPhone().equals(dto.getPhone())
+        // && guestRepository.existsByPhone(dto.getPhone())) {
+        // throw new DataAlreadyExistsException("Phone already exists");
+        // }
 
-        if (!guest.getAadhaar().equals(dto.getAadhaar())
-                && guestRepository.existsByAadhaar(dto.getAadhaar())) {
-            throw new DataAlreadyExistsException("Aadhaar already exists");
-        }
-
-        RoomEntity room = roomRepository.findById(dto.getRoomId())
-                .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
-
+        // if (!guest.getAadhaar().equals(dto.getAadhaar())
+        // && guestRepository.existsByAadhaar(dto.getAadhaar())) {
+        // throw new DataAlreadyExistsException("Aadhaar already exists");
+        // }
         guestMapper.updateEntity(dto, guest);
-        guest.setRoom(room);
-
         return guestMapper.toDto(guestRepository.save(guest));
     }
 

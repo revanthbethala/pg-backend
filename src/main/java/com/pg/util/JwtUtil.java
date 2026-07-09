@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -14,11 +15,12 @@ import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtUtil {
-
-	private static final String SECRET_KEY = "SecretKeyMustBeVeryLongToSatisfyThe256BitRequirement!!!";
-
-	private static final long ACCESS_TOKEN_EXPIRATION_TIME = 15 * 60 * 1000; // 15 minutes
-	private static final long REFRESH_TOKEN_EXPIRATION_TIME = 7 * 24 * 60 * 60 * 1000; // 7 days
+	@Value("${jwt.secret}")
+	private String SECRET_KEY;
+	@Value("${jwt.access.expiry}")
+	private long ACCESS_TOKEN_EXPIRATION_TIME;
+	@Value("${jwt.refresh.expiry}")
+	private long REFRESH_TOKEN_EXPIRATION_TIME;
 
 	private static final String TOKEN_TYPE_CLAIM = "type";
 	private static final String ACCESS_TOKEN_TYPE = "access";

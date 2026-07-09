@@ -89,7 +89,7 @@ public class GlobalException {
         @ExceptionHandler(DataAccessException.class)
         public ResponseEntity<ErrorResponse> handleDatabaseException(DataAccessException ex) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                .body(ErrorResponseUtil.buildError("Database error occurred."));
+                                .body(ErrorResponseUtil.buildError("Internal server err"));
         }
 
         // JWT Expired
@@ -118,8 +118,7 @@ public class GlobalException {
 
         @ExceptionHandler(Exception.class)
         public ResponseEntity<ErrorResponse> handleAll(Exception ex) {
-                ex.printStackTrace();
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                                .body(ErrorResponseUtil.buildError(ex.getMessage()));
+                                .body(ErrorResponseUtil.buildError("Internal server err"));
         }
 }
