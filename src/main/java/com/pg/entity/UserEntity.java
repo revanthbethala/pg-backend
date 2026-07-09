@@ -19,6 +19,16 @@ public class UserEntity {
 	private String id;
 	@Column(nullable = false, unique = true)
 	private String email;
+	@Column
+	private String name;
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Column(nullable = false)
 	private String password;
 	@Column(length = 1000)

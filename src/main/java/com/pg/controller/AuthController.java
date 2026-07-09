@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pg.dto.ApiResponse;
 import com.pg.dto.AuthResponseDto;
+import com.pg.dto.LoginRequestDto;
 import com.pg.dto.RefreshTokenRequestDto;
+import com.pg.dto.RegisterRequestDto;
 import com.pg.dto.UserDto;
 import com.pg.service.AuthService;
 import com.pg.util.SuccessResponseUtil;
@@ -26,19 +28,11 @@ public class AuthController {
 		this.authService = authService;
 	}
 
-	@GetMapping("/hello")
-	public ResponseEntity<ApiResponse<String>> sayHello() {
-		return ResponseEntity.ok(
-				SuccessResponseUtil.success(
-						"Hello fetched successfully",
-						"hello"));
-	}
-
 	@PostMapping("/login")
 	public ResponseEntity<ApiResponse<AuthResponseDto>> loginController(
-			@Valid @RequestBody UserDto userDto) {
+			@Valid @RequestBody LoginRequestDto loginDto) {
 
-		AuthResponseDto authResponse = authService.loginService(userDto);
+		AuthResponseDto authResponse = authService.loginService(loginDto);
 
 		return ResponseEntity.ok(
 				SuccessResponseUtil.success(
@@ -71,7 +65,7 @@ public class AuthController {
 
 	@PostMapping("/register")
 	public ResponseEntity<ApiResponse<UserDto>> registerController(
-			@Valid @RequestBody UserDto userDto) {
+			@Valid @RequestBody RegisterRequestDto userDto) {
 
 		UserDto user = authService.registerService(userDto);
 

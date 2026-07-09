@@ -4,7 +4,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.pg.dto.AuthResponseDto;
+import com.pg.dto.LoginRequestDto;
 import com.pg.dto.RefreshTokenRequestDto;
+import com.pg.dto.RegisterRequestDto;
 import com.pg.dto.UserDto;
 import com.pg.entity.UserEntity;
 import com.pg.exception.DataAlreadyExistsException;
@@ -34,7 +36,7 @@ public class AuthService {
 		this.passwordEncoder = passwordEncoder;
 	}
 
-	public AuthResponseDto loginService(UserDto userDto) {
+	public AuthResponseDto loginService(LoginRequestDto userDto) {
 
 		UserEntity userEntity = userRepository.findByEmail(userDto.getEmail());
 
@@ -92,7 +94,7 @@ public class AuthService {
 		userRepository.save(userEntity);
 	}
 
-	public UserDto registerService(UserDto userDto) {
+	public UserDto registerService(RegisterRequestDto userDto) {
 
 		UserEntity existingUser = userRepository.findByEmail(userDto.getEmail());
 

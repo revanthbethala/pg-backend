@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,6 +13,8 @@ import com.pg.dto.ApiResponse;
 import com.pg.dto.UserDto;
 import com.pg.service.UserService;
 import com.pg.util.SuccessResponseUtil;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -32,6 +36,18 @@ public class UserController {
     public ResponseEntity<ApiResponse<Void>> deleteCurrentUser(Authentication authentication) {
         userService.deleteCurrentUser(authentication.getName());
         return ResponseEntity.ok(SuccessResponseUtil.success("Profile deleted successfully"));
+    }
+    
+    @PutMapping("/me")
+    public ResponseEntity<ApiResponse<UserDto>> updateCurrentUser(
+            Authentication authentication,
+            @Valid @RequestBody UserDto request) {
+
+        UserDto user = userService.updateCurrentUser(authentication.getName(), request);
+
+        return ResponseEntity.ok(
+                SuccessResponseUtil.success("Profile updated successfully", user)
+        );
     }
 
 }
