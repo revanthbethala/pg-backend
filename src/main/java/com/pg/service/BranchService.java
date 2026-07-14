@@ -1,13 +1,11 @@
 package com.pg.service;
 
-import java.lang.constant.Constable;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.pg.dto.BranchDto;
-import com.pg.dto.UserDto;
 import com.pg.entity.BranchEntity;
 import com.pg.entity.UserEntity;
 import com.pg.exception.ResourceNotFoundException;
@@ -53,7 +51,7 @@ public class BranchService {
 				.orElseThrow(() -> new ResourceNotFoundException("User not found"));
 		branchDto.setUserId(userId);
 		BranchEntity branchEntity = branchMapper.toEntity(branchDto);
-		branchEntity.setUserId(user);
+		branchEntity.setUser(user);
 		BranchEntity branch = branchRepository.save(branchEntity);
 		return branchMapper.toDto(branch);
 	}
@@ -67,7 +65,7 @@ public class BranchService {
 		if (branchDto.getUserId() != null && !branchDto.getUserId().isBlank()) {
 			UserEntity user = userRepository.findById(branchDto.getUserId())
 					.orElseThrow(() -> new ResourceNotFoundException("User not found"));
-			existingBranch.get().setUserId(user);
+			existingBranch.get().setUser(user);
 		}
 		BranchEntity updatedBranchEntity = branchRepository.save(existingBranch.get());
 		return branchMapper.toDto(updatedBranchEntity);

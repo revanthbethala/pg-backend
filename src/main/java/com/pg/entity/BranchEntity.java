@@ -22,7 +22,6 @@ public class BranchEntity {
 	@Column(nullable = false)
 	private String branchName;
 	private String address;
-	private String city;
 	private Boolean isActive = true;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false)
@@ -54,13 +53,6 @@ public class BranchEntity {
 		this.address = address;
 	}
 
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
 
 	public Boolean getIsActive() {
 		return isActive;
@@ -70,11 +62,11 @@ public class BranchEntity {
 		this.isActive = isActive;
 	}
 
-	public UserEntity getUserId() {
+	public UserEntity getUser() {
 		return user;
 	}
 
-	public void setUserId(UserEntity user) {
+	public void setUser(UserEntity user) {
 		this.user = user;
 	}
 
@@ -88,7 +80,7 @@ public class BranchEntity {
 
 	@Override
 	public String toString() {
-		return "BranchEntity [id=" + id + ", branchName=" + branchName + ", address=" + address + ", city=" + city
+		return "BranchEntity [id=" + id + ", branchName=" + branchName + ", address=" + address + ", city=" 
 				+ ", isActive=" + isActive + ", user=" + user + "]";
 	}
 }

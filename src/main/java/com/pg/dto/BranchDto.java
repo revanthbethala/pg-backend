@@ -14,8 +14,7 @@ public class BranchDto {
 	@NotBlank
 	@Size(min = 6,message = "Min 6 chars needed")
 	private String address;
-	@NotBlank
-	private String city;
+	
     private Boolean isActive = true;
     private String userId;
     private java.util.List<RoomDto> rooms;
@@ -37,12 +36,6 @@ public class BranchDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
 	public Boolean getIsActive() {
 		return isActive;
 	}
@@ -63,7 +56,7 @@ public class BranchDto {
 	}
 	@Override
 	public String toString() {
-		return "BranchDto [id=" + id + ", branchName=" + branchName + ", address=" + address + ", city=" + city
+		return "BranchDto [id=" + id + ", branchName=" + branchName + ", address=" + address
 				+ ", isActive=" + isActive + ", userId=" + userId + ", rooms=" + rooms + "]";
 	}
     
