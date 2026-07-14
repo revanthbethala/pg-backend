@@ -1,5 +1,6 @@
 package com.pg.service;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -53,11 +54,13 @@ public class UserService {
             throw  new ResourceNotFoundException("User not found");
         }      
         UserEntity user = userEntity.get();
-        if(!dto.getEmail().equals(user.getEmail()) && userRepository.findByEmail(dto.getEmail())!=null) {
+        if(!Objects.equals(dto.getEmail(),user.getEmail()) && userRepository.findByEmail(dto.getEmail())!=null) {
         	throw new DataAlreadyExistsException("Email already exists");
        	
         }
+        if(dto.getEmail()!=null) {
         user.setEmail(dto.getEmail());
+        }
         user.setName(dto.getName());
         userRepository.save(user);
         return userMapper.toDto(user);

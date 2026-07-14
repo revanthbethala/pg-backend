@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
 	private String id;
-	@NotBlank(message = "Email cant be empty")
+//	@NotBlank(message = "Email cant be empty")
 	@Email
 	private String email;
 	@NotBlank(message = "Name cant be empty")
