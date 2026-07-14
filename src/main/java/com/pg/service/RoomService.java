@@ -50,7 +50,7 @@ public class RoomService {
 
     public RoomDto createRoom(String branchId, RoomDto dto) {
 
-        if (roomRepository.existsByRoomNumber(dto.getRoomNumber())) {
+        if (roomRepository.existsByRoomNumberAndBranchId(dto.getRoomNumber(),branchId)) {
             throw new DataAlreadyExistsException("Room number already exists");
         }
 
@@ -59,7 +59,7 @@ public class RoomService {
 
         dto.setBranchId(branchId);
         RoomEntity room = roomMapper.toEntity(dto);
-        room.setBranchId(branch);
+        room.setBranch(branch);
 
         room = roomRepository.save(room);
 
@@ -70,8 +70,7 @@ public class RoomService {
 
         RoomEntity room = roomRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
-
-        if (roomRepository.existsByRoomNumberAndIdNot(dto.getRoomNumber(), id)) {
+        if (roomRepository.existsByRoomNumberAndIdNotAndBranchId(dto.getRoomNumber(), id,room.getBranch().getId())) {
             throw new DataAlreadyExistsException("Room number already exists");
         }
 
@@ -79,7 +78,7 @@ public class RoomService {
                 .orElseThrow(() -> new ResourceNotFoundException("Branch not found"));
 
         roomMapper.updateEntity(dto, room);
-        room.setBranchId(branch);
+        room.setBranch(branch);
 
         room = roomRepository.save(room);
 

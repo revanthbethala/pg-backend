@@ -11,9 +11,9 @@ import com.pg.entity.RoomEntity;
 @Repository
 public interface RoomRepository extends JpaRepository<RoomEntity, String> {
 
-	public boolean existsByRoomNumber(int roomNumber);
+	boolean existsByRoomNumberAndBranchId(String roomNumber, String branchId);
 
-	public boolean existsByRoomNumberAndIdNot(int roomNumber, String id);
+	public boolean existsByRoomNumberAndIdNotAndBranchId(String roomNumber, String id,String branchId);
     List<RoomEntity> findByBranch_Id(String branchId);
 
 }

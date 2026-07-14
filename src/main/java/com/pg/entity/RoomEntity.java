@@ -21,7 +21,7 @@ public class RoomEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
-	private int roomNumber;
+	private String roomNumber;
 	private int capacity;
 	private double rent;
 	private boolean maintainance = false;
@@ -49,11 +49,11 @@ public class RoomEntity {
 		this.id = id;
 	}
 
-	public int getRoomNumber() {
+	public String getRoomNumber() {
 		return roomNumber;
 	}
 
-	public void setRoomNumber(int roomNumber) {
+	public void setRoomNumber(String roomNumber) {
 		this.roomNumber = roomNumber;
 	}
 
@@ -81,11 +81,11 @@ public class RoomEntity {
 		this.maintainance = maintainance;
 	}
 
-	public BranchEntity getBranchId() {
+	public BranchEntity getBranch() {
 		return branch;
 	}
 
-	public void setBranchId(BranchEntity branch) {
+	public void setBranch(BranchEntity branch) {
 		this.branch = branch;
 	}
 
