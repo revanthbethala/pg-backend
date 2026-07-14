@@ -9,6 +9,7 @@ import com.pg.entity.GuestEntity;
 import com.pg.entity.RoomEntity;
 import com.pg.exception.DataAlreadyExistsException;
 import com.pg.exception.ResourceNotFoundException;
+import com.pg.exception.RoomUnderMaintainanceException;
 import com.pg.mapper.GuestMapper;
 import com.pg.repository.GuestRepository;
 import com.pg.repository.RoomRepository;
@@ -30,10 +31,15 @@ public class GuestService {
 
     public GuestDto createGuest(GuestDto dto, String roomId) {
 
-        System.out.println("ROOM ID:" + roomId);
-        RoomEntity room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
+        RoomEntity room = roomRepository.findById(roomId).orElseThrow(() -> new ResourceNotFoundException("Room not found"));
 
+        List<GuestEntity> guestsEntities = guestRepository.findByRoom_id(roomId);
+        if(room.isMaintainance()) {
+        	throw new RoomUnderMaintainanceException("Cant add guests,Room is under maintainance");
+        }
+        if(guestsEntities.size()>=room.getCapacity()) {
+        	throw new DataAlreadyExistsException("Cant have more than "+room.getCapacity()+" guests in this room");
+        }
         // if (guestRepository.existsByAadhaar(dto.getAadhaar())) {
         // throw new DataAlreadyExistsException("Aadhaar already exists");
         // }
@@ -50,7 +56,9 @@ public class GuestService {
         RoomEntity room = roomRepository.findById(roomId)
                 .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
 
-        return guestRepository.findAll()
+        List<GuestEntity> guestsEntities = guestRepository.findByRoom_id(roomId);
+        
+        return guestsEntities
                 .stream()
                 .map(guestMapper::toDto)
                 .toList();
@@ -65,8 +73,7 @@ public class GuestService {
     }
 
     public GuestDto updateGuest(String id, GuestDto dto) {
-        RoomEntity room = roomRepository.findById(null)
-                .orElseThrow(() -> new ResourceNotFoundException("Room not found"));
+        
 
         GuestEntity guest = guestRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Guest not found"));
