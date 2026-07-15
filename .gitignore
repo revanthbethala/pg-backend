@@ -35,5 +35,4 @@ build/
 !.gitignore
 !.gitattributes
 !.mvn/
-src/main/resources/application.properties
 .settings
